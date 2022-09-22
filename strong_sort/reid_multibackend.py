@@ -10,7 +10,6 @@ import gdown
 from os.path import exists as file_exists
 from .deep.reid_model_factory import show_downloadeable_models, get_model_url, get_model_name
 
-from yolov5.utils.general import LOGGER, check_version, check_requirements
 from strong_sort.deep.reid.torchreid.utils import check_isfile, load_pretrained_weights, compute_model_complexity
 from strong_sort.deep.reid.torchreid.utils.tools import download_url
 from strong_sort.deep.reid.torchreid.models import build_model
@@ -116,8 +115,6 @@ class ReIDDetectMultiBackend(nn.Module):
             self.binding_addrs = OrderedDict((n, d.ptr) for n, d in self.bindings.items())
             batch_size = self.bindings['images'].shape[0]  # if dynamic, this is instead max batch size
         elif self.xml:  # OpenVINO
-            LOGGER.info(f'Loading {w} for OpenVINO inference...')
-            check_requirements(('openvino',))  # requires openvino-dev: https://pypi.org/project/openvino-dev/
             from openvino.runtime import Core, Layout, get_batch
             ie = Core()
             if not Path(w).is_file():  # if not *.xml
