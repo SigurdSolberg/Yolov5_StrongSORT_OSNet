@@ -125,7 +125,6 @@ class ReIDDetectMultiBackend(nn.Module):
             self.output_layer = next(iter(self.executable_network.outputs))
         
         elif self.tflite:
-            LOGGER.info(f'Loading {w} for TensorFlow Lite inference...')
             try:  # https://coral.ai/docs/edgetpu/tflite-python/#update-existing-tf-lite-code-for-the-edge-tpu
                 from tflite_runtime.interpreter import Interpreter, load_delegate
             except ImportError:
@@ -153,7 +152,7 @@ class ReIDDetectMultiBackend(nn.Module):
     @staticmethod
     def model_type(p='path/to/model.pt'):
         # Return model type from model path, i.e. path='path/to/model.onnx' -> type=onnx
-        from export import export_formats
+        from yolov5.export import export_formats
         suffixes = list(export_formats().Suffix) + ['.xml']  # export suffixes
         check_suffix(p, suffixes)  # checks
         p = Path(p).name  # eliminate trailing separators
