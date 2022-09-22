@@ -1,19 +1,26 @@
+import sys
+import os
+from pathlib import Path
+
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]  # yolov5 strongsort root directory
+WEIGHTS = ROOT / 'weights'
+
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))  # add ROOT to PATH
+if str(ROOT / 'yolov5') not in sys.path:
+    sys.path.append(str(ROOT / 'yolov5'))  # add yolov5 ROOT to PATH
+if str(ROOT / 'strong_sort') not in sys.path:
+    sys.path.append(str(ROOT / 'strong_sort'))  # add strong_sort ROOT to PATH
+ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+
 import numpy as np
 import torch
-import sys
-import cv2
-import gdown
-from os.path import exists as file_exists, join
-import torchvision.transforms as transforms
 
 from .sort.nn_matching import NearestNeighborDistanceMetric
 from .sort.detection import Detection
 from .sort.tracker import Tracker
 
-from .deep.reid.torchreid.utils import FeatureExtractor
-from .deep.reid_model_factory import show_downloadeable_models, get_model_url, get_model_name
-
-from .deep.reid.torchreid.utils.tools import download_url
 from .reid_multibackend import ReIDDetectMultiBackend
 
 __all__ = ['StrongSORT']
