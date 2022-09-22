@@ -2,16 +2,16 @@ import sys
 import os
 from pathlib import Path
 
-FILE = Path(__file__).resolve()
-ROOT = FILE.parents[0].parents[0]  # yolov5 strongsort root directory
+# FILE = Path(__file__).resolve()
+# ROOT = FILE.parents[0].parents[0]  # yolov5 strongsort root directory
 
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))  # add ROOT to PATH
-if str(ROOT / 'yolov5') not in sys.path:
-    sys.path.append(str(ROOT / 'yolov5'))  # add yolov5 ROOT to PATH
-if str(ROOT / 'strong_sort') not in sys.path:
-    sys.path.append(str(ROOT / 'strong_sort'))  # add strong_sort ROOT to PATH
-ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
+# if str(ROOT) not in sys.path:
+#     sys.path.append(str(ROOT))  # add ROOT to PATH
+# if str(ROOT / 'yolov5') not in sys.path:
+#     sys.path.append(str(ROOT / 'yolov5'))  # add yolov5 ROOT to PATH
+# if str(ROOT / 'strong_sort') not in sys.path:
+#     sys.path.append(str(ROOT / 'strong_sort'))  # add strong_sort ROOT to PATH
+# ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 import numpy as np
 import torch
