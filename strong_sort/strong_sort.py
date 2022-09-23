@@ -22,23 +22,32 @@ from .sort.tracker import Tracker
 
 from .reid_multibackend import ReIDDetectMultiBackend
 
+from pathlib import Path
+import torch
+import torch.backends.cudnn as cudnn
+
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]  # yolov5 strongsort root directory
+WEIGHTS = ROOT / 'weights'
+
 __all__ = ['StrongSORT']
 
 
 class StrongSORT(object):
-    def __init__(self, 
-                 model_weights,
-                 device,
-                 fp16,
+    def __init__(self,
+                 root_abspath_object: Path,
+                 model_weights: str,
+                 device: str,
+                 fp16: bool,
                  max_dist=0.2,
                  max_iou_distance=0.7,
                  max_age=70, n_init=3,
                  nn_budget=100,
-                 mc_lambda=0.995,
-                 ema_alpha=0.9
                 ):
 
-        self.model = ReIDDetectMultiBackend(weights=model_weights, device=device, fp16=fp16)
+        self.model = ReIDDetectMultiBackend(weights=root_abspath_object / model_weights, 
+                                            device=device, 
+                                            fp16=fp16)
         
         self.max_dist = max_dist
         metric = NearestNeighborDistanceMetric(
