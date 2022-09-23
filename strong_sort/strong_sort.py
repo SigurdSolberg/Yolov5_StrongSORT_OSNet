@@ -79,15 +79,15 @@ class StrongSORT(object):
                 continue
 
             box = track.to_tlwh()
-            # x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
-            xyxy = np.array(self._tlwh_to_xyxy(box))
-            x, y, w, h = xyxy2xywh(xyxy)
+            x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
+            # xyxy = np.array(self._tlwh_to_xyxy(box))
+            # x, y, w, h = xyxy2xywh(xyxy)
             
             track_id = track.track_id
             class_id = track.class_id
             conf = track.conf
-            # outputs.append(np.array([x1, y1, x2, y2, track_id, class_id, conf]))
-            outputs.append(np.array([x, y, w, h, track_id, class_id, conf]))
+            outputs.append(np.array([x1, y1, x2, y2, track_id, class_id, conf]))
+            # outputs.append(np.array([x, y, w, h, track_id, class_id, conf]))
         if len(outputs) > 0:
             outputs = np.stack(outputs, axis=0)
         return outputs
