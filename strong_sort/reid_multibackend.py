@@ -33,6 +33,8 @@ class ReIDDetectMultiBackend(nn.Module):
         w = weights[0] if isinstance(weights, list) else weights
         self.pt, self.jit, self.onnx, self.xml, self.engine, self.coreml, \
             self.saved_model, self.pb, self.tflite, self.edgetpu, self.tfjs = self.model_type(w)  # get backend
+        self.pt = True
+        
         self.fp16 = fp16
         self.fp16 &= self.pt or self.jit or self.engine  # FP16
 
@@ -156,7 +158,7 @@ class ReIDDetectMultiBackend(nn.Module):
         suffixes = list(export_formats().Suffix) + ['.xml']  # export suffixes
         check_suffix(p, suffixes)  # checks
         p = Path(p).name  # eliminate trailing separators
-        pt, jit, onnx, xml, engine, coreml, saved_model, pb, tflite, edgetpu, tfjs, xml2 = (s in p for s in suffixes)
+        pt, jit, onnx, xml, engine, coreml, saved_model, pb, tflite, edgetpu, tfjs, xml2, *unused = (s in p for s in suffixes)
         xml |= xml2  # *_openvino_model or *.xml
         tflite &= not edgetpu  # *.tflite
         return pt, jit, onnx, xml, engine, coreml, saved_model, pb, tflite, edgetpu, tfjs
