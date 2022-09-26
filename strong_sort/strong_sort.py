@@ -82,8 +82,8 @@ class StrongSORT(object):
             print('Track: ', track)
             print('Track is confirmed: ', track.is_confirmed())
             print('Time since update: ', track.time_since_update)
-            if not track.is_confirmed() or track.time_since_update > 1:
-                continue
+            #if not track.is_confirmed() or track.time_since_update > 1:
+            #    continue
 
             box = track.to_tlwh()
             x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
