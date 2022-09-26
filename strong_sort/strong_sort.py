@@ -57,10 +57,10 @@ class StrongSORT(object):
             metric, max_iou_distance=max_iou_distance, max_age=max_age, n_init=n_init)
 
     def update(self, bbox_xywh, confidences, classes, ori_img):
-        print('BBox xywh: ', bbox_xywh)
-        print('Confidences: ', confidences)
-        print('Classes: ', classes)
-        print('OriImage: ', ori_img.shape)
+        #print('BBox xywh: ', bbox_xywh)
+        #print('Confidences: ', confidences)
+        #print('Classes: ', classes)
+        #print('OriImage: ', ori_img.shape)
         self.height, self.width = ori_img.shape[:2]
         # generate detections
         features = self._get_features(bbox_xywh, ori_img)
@@ -79,17 +79,18 @@ class StrongSORT(object):
         # output bbox identities
         outputs = []
         for track in self.tracker.tracks:
-            print('Track: ', track)
-            print('Track is confirmed: ', track.is_confirmed())
-            print('Time since update: ', track.time_since_update)
+            #print('Track: ', track)
+            #print('Track is confirmed: ', track.is_confirmed())
+            #print('Time since update: ', track.time_since_update)
             #if not track.is_confirmed() or track.time_since_update > 1:
             #    continue
 
             box = track.to_tlwh()
             x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
             w, h = x2 - x1, y2 - y1
+            x, y = x1 + w/2, y1 + h/2
 
-            print('Print coords: ', x1, y1, x2, y2)
+            #print('Print coords: ', x1, y1, x2, y2)
             # xyxy = np.array(self._tlwh_to_xyxy(box))
             # x, y, w, h = xyxy2xywh(xyxy)
             
@@ -97,7 +98,7 @@ class StrongSORT(object):
             class_id = track.class_id
             conf = track.conf
             #outputs.append(np.array([x1, y1, x2, y2, track_id, class_id, conf]))
-            outputs.append(np.array([x1, y1, w, h, track_id, class_id, conf]))
+            outputs.append(np.array([x, y, w, h, track_id, class_id, conf]))
         if len(outputs) > 0:
             outputs = np.stack(outputs, axis=0)
         return outputs
