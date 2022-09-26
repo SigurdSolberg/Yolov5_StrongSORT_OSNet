@@ -80,11 +80,14 @@ class StrongSORT(object):
         outputs = []
         for track in self.tracker.tracks:
             print('Track: ', track)
+            print('Track is confirmed: ', track.is_confirmed())
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue
 
             box = track.to_tlwh()
             x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
+
+            print(x1, y1, x2, y2)
             # xyxy = np.array(self._tlwh_to_xyxy(box))
             # x, y, w, h = xyxy2xywh(xyxy)
             
