@@ -57,6 +57,10 @@ class StrongSORT(object):
             metric, max_iou_distance=max_iou_distance, max_age=max_age, n_init=n_init)
 
     def update(self, bbox_xywh, confidences, classes, ori_img):
+        print('BBox xywh: ', bbox_xywh)
+        print('Confidences: ', confidences)
+        print('Classes: ', classes)
+        print('OriImage: ', ori_img.shape)
         self.height, self.width = ori_img.shape[:2]
         # generate detections
         features = self._get_features(bbox_xywh, ori_img)
@@ -67,7 +71,6 @@ class StrongSORT(object):
         # run on non-maximum supression
         boxes = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
-
 
         # update tracker
         self.tracker.predict()
