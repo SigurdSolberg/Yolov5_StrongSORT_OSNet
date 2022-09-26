@@ -79,6 +79,7 @@ class StrongSORT(object):
         # output bbox identities
         outputs = []
         for track in self.tracker.tracks:
+            print('Track: ', track)
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue
 
