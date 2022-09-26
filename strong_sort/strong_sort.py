@@ -68,6 +68,7 @@ class StrongSORT(object):
         boxes = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
 
+
         # update tracker
         self.tracker.predict()
         self.tracker.update(detections, classes, confidences)
