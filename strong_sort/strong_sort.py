@@ -81,6 +81,7 @@ class StrongSORT(object):
         for track in self.tracker.tracks:
             print('Track: ', track)
             print('Track is confirmed: ', track.is_confirmed())
+            print('Time since update: ', track.time_since_update)
             if not track.is_confirmed() or track.time_since_update < 1:
                 continue
 
